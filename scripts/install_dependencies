@@ -25,4 +25,32 @@ source environment/bin/activate
 # Install python dev libraries for virtual environment
 pip install -r requirements.txt
 
+mkdir downloads
+cd downloads
+pip install opencv-python
+sudo yum install autoconf aclocal automake 
+sudo yum install libtool 
+sudo yum install libjpeg-devel libpng-devel libtiff-devel zlib-devel
+wget http://www.leptonica.org/source/leptonica-1.72.tar.gz 
+tar -zxvf leptonica-1.72.tar.gz 
+cd leptonica-1.72 
+./configure 
+make 
+sudo make install 
+cd ..
+tar -zxvf 3.04.00.tar.gz 
+cd tesseract-3.04.00/ 
+./autogen.sh 
+./configure 
+make
+sudo make install 
+sudo ldconfig
+cd /usr/local/share/tessdata
+sudo wget https://github.com/tesseract-ocr/tessdata/tree/3.04.00/eng.traineddata
+sudo wget hhttp://tesseract-ocr.googlecode.com/files/tesseract-ocr-3.01.osd.tar.gz 
+sudo tar xvf tesseract-ocr-3.01.osd.tar.gz 
+sudo mv tesseract-ocr/tessdata/* . 
+sudo rm tesseract-ocr-3.01.osd.tar.gz 
+nano ~/.bash_profile # Copy this line to the end: export TESSDATA_PREFIX=/usr/local/share/ # Verify: tesseract --list-langs
+pip install pytesseract
 python setup.py install
